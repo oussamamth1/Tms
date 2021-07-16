@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,14 +26,14 @@ public class Fragment1 extends Fragment implements  View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TextView textView=getActivity().findViewById(R.id.tv_Profile);
-        textView.setOnClickListener(this);
+        ImageButton imageButton=getActivity().findViewById(R.id.ib_menu_f1);
+        imageButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-           case R.id.tv_Profile:
+            case R.id.ib_menu_f1:
             Intent intent=new Intent(getActivity(), CreateProfile1.class);
             startActivity(intent);
         }

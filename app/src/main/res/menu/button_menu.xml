@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 <item android:title="Profile" android:icon="@drawable/ic_person"
     app:showAsAction="always" android:id="@+id/profile_buttom"  />
     <item android:title="Ask" android:icon="@drawable/ic_baseline_rate_review_24"
         app:showAsAction="always" android:id="@+id/ask_buttom"/>
     <item android:title="Requzste" android:icon="@drawable/ic_baseline_queue_24"
         app:showAsAction="always" android:id="@+id/queue_buttom"/>
-    <item android:title="Home" android:icon="@drawable/ic_baseline_home_24"
+
+    <item android:title="Home"
+
+        android:icon="@drawable/ic_baseline_home_24"
         app:showAsAction="always" android:id="@+id/Home_buttom"/>
 </menu>
