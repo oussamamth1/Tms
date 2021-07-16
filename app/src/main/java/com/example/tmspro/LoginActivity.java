@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox checkBox;
     ProgressBar progressBar;
     FirebaseAuth muth;
+    FirebaseAuth.AuthStateListener authStateListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,19 @@ public class LoginActivity extends AppCompatActivity {
         checkBox=findViewById(R.id.login_chek_box);
         progressBar=findViewById(R.id.prog_login);
         muth=FirebaseAuth.getInstance();
+        authStateListener=new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull  FirebaseAuth firebaseAuth) {
+                FirebaseUser user=firebaseAuth.getCurrentUser();
+                if(user!=null){
+                    //user signe in
+                    sendTomain();
+                }else{
+
+                }
+
+            }
+        };
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -85,15 +99,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendTomain() {
-        Intent intent=new Intent(LoginActivity.this,Splashscreen.class);
+        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
         startActivity(intent);
         finish();
     }
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null){
-            sendTomain();
+        muth.addAuthStateListener(authStateListener);
+       // FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+       // if(user!=null){
+         //   sendTomain();
+       // }
+}
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(authStateListener !=null){
+            muth.removeAuthStateListener(authStateListener);
+
+
         }
-}}
+
+    }
+}
