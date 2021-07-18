@@ -1,6 +1,7 @@
 package com.example.tmspro;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +23,8 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -29,12 +32,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class CreateProfile1 extends Activity {
     EditText etname,etlocation,etprofession,etwebsite,etmail;
@@ -93,36 +99,71 @@ public class CreateProfile1 extends Activity {
                if(!TextUtils.isEmpty(name)&& !TextUtils.isEmpty(location)&& !TextUtils.isEmpty(mail) &&  !TextUtils.isEmpty(prof) &&
                        !TextUtils.isEmpty(web) && imageuri !=null ){
                    etprog.setVisibility(View.VISIBLE);
-                   StorageReference filepath=storageReference.child("Blogimage").child(imageuri.getLastPathSegment());
+                   final ProgressDialog pd=new ProgressDialog(CreateProfile1.this);
+                   pd.setTitle("create Profile for "+name);
+                   pd.setIcon(R.drawable.ic_baseline_sync_24);
+
+                   pd.show();
+                   pd.setCanceledOnTouchOutside(false);
+
+                  // pd.setInverseBackgroundForced(true);
+                   final StorageReference reference=storageReference.child(System.currentTimeMillis()+ "." +getFileEXt(imageuri));
+                   StorageReference filepath=storageReference.child("Blogimage").child(System.currentTimeMillis()+ "." +getFileEXt(imageuri));
+                   //uploadTask=filepath.putFile(imageuri);
+
                    filepath.putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                        @Override
                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           Uri downloduri=taskSnapshot.getUploadSessionUri();
+                         // String downlod = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                           if (taskSnapshot.getMetadata() != null) {
+                               if (taskSnapshot.getMetadata().getReference() != null) {
+                                   Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                                   result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                       @Override
+                                       public void onSuccess(Uri uri) {
+                                           String imageUrl = uri.toString();
+                                           DatabaseReference newpost=databaseReference.push();
+                                           Map<String , String > profile =new HashMap<>();
+                                           profile.put("name",name);
+                                           profile.put("prof",prof);
+                                           profile.put("location",location);
+                                           profile.put("email",mail);
+                                           profile.put("web",web);
+                                           profile.put("uid",user.getUid());
+                                           profile.put("url",imageUrl);
 
-                           DatabaseReference newpost=databaseReference.push();
-                           Map<String , String > profile =new HashMap<>();
-                           profile.put("name",name);
-                           profile.put("prof",prof);
-                           profile.put("location",location);
-                           profile.put("email",mail);
-                           profile.put("web",web);
-                           profile.put("uid",user.getUid());
-                          profile.put("url",downloduri.toString());
-                          allUserMember.setName(name);
-                          allUserMember.setUid(auth.getUid());
+                                           allUserMember.setName(name);
+                                           allUserMember.setUid(auth.getUid());
 
-                           allUserMember.setProf(prof);
-                           allUserMember.setLocation(location);
+                                           allUserMember.setProf(prof);
+                                           allUserMember.setLocation(location);
 
-                           allUserMember.setUrl(downloduri.toString());
-                           newpost.setValue(profile);
-                           newpost.child(user.getUid()).setValue(allUserMember);
-                           documentReference.set(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
-                               @Override
-                               public void onSuccess(Void unused) {
-                                   Toast.makeText(CreateProfile1.this, "it work", Toast.LENGTH_SHORT).show();
+                                           allUserMember.setUrl(imageUrl);
+                                           newpost.setValue(profile);
+                                           newpost.child(user.getUid()).setValue(allUserMember);
+                                           documentReference.set(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                               @Override
+                                               public void onSuccess(Void unused) {
+
+                                                   Snackbar.make(findViewById(android.R.id.content),"Image uplode",Snackbar.LENGTH_LONG).show();
+                                                   pd.dismiss();
+                                                   Toast.makeText(CreateProfile1.this, "it work", Toast.LENGTH_SHORT).show();
+                                               }
+                                           });
+                                           //createNewPost(imageUrl);
+                                       }
+                                   });
                                }
-                           });
+                           }
+
+
+                          // String profileImageUrl = filepath.getDownloadUrl().toString();
+                         //  Task<Uri> downloduri=taskSnapshot.getStorage().getDownloadUrl();
+
+                           //   String downloduri=taskSnapshot.getUploadSessionUri().toString();
+
+
+
                            Toast.makeText(getApplicationContext(),"Profile Created",Toast.LENGTH_LONG).show();
                            Handler handler=new Handler();
                            handler.postDelayed(() -> {
@@ -135,6 +176,12 @@ etprog.setVisibility(View.INVISIBLE);
                        @Override
                        public void onFailure(@NonNull  Exception e) {
 
+                       }
+                   }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                       @Override
+                       public void onProgress(@NonNull  UploadTask.TaskSnapshot snapshot) {
+                           double per=(100.00* snapshot.getBytesTransferred()/snapshot.getTotalByteCount());
+                           pd.setMessage("Progress : "+(int)per +"%");
                        }
                    });
                    
@@ -156,12 +203,12 @@ etprog.setVisibility(View.INVISIBLE);
            }
        });
     }
-    private String getFileEXt(Uri uri){
+  /*  private String getFileEXt(Uri uri){
         ContentResolver contentResolver=getContentResolver();
         MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
         return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
 
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -169,14 +216,20 @@ etprog.setVisibility(View.INVISIBLE);
         try {
             if(requestCode==PICK_IMAGE && resultCode ==RESULT_OK){
                 imageuri =data.getData();
-                Picasso.get().load(imageuri).into(imageView);}
+                Picasso.with(getApplicationContext()).load(imageuri).into(imageView);}
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"Errer"+e,Toast.LENGTH_SHORT).show();
         }
 
     }
+    private String getFileEXt(Uri uri){
+        ContentResolver contentResolver=getContentResolver();
+        MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
+        return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
 
-    public void savenote(View view){
+    }
+
+   /* public void savenote(View view){
         String name=etname.getText().toString();
         String prof=etprofession.getText().toString();
         Map<String,Object> note=new HashMap<>();
@@ -184,7 +237,7 @@ etprog.setVisibility(View.INVISIBLE);
         note.put(KEY_pof,prof);
 
 
-    }
+    }*/
 
 
 }

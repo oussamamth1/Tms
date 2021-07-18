@@ -122,7 +122,7 @@ String Currentuserid;
         try {
             if(requestCode==PICK_IMAGE || resultCode ==RESULT_OK || data!=null ||data.getData()!= null){
                 imageuri =data.getData();
-                Picasso.get().load(imageuri).into(imageView);}
+                Picasso.with(getApplicationContext()).load(imageuri).into(imageView);}
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"Errer"+e,Toast.LENGTH_SHORT).show();
         }
