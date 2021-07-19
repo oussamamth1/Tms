@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -37,7 +38,8 @@ public class Fragment1 extends Fragment implements  View.OnClickListener{
             DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth auth;
-    ImageView imageView,imageView2;
+    ImageView imageView,imagemenu;
+    ImageButton ib_edit;
     TextView nameet,profitionet,webet,emailet;
 
 
@@ -55,13 +57,16 @@ public class Fragment1 extends Fragment implements  View.OnClickListener{
         databaseReference=firebaseDatabase.getReference().child("Blog");
         databaseReference.keepSynced(true);
         imageView=getActivity().findViewById(R.id.iv_f1);
+
+        ib_edit=getActivity().findViewById(R.id.ib_edit_f1);
         //imageView2=getActivity().findViewById(R.id.imageView2);
         nameet=getActivity().findViewById(R.id.tv_name_f1);
         profitionet=getActivity().findViewById(R.id.tv_pro_f1);
         webet=getActivity().findViewById(R.id.tv_web_f1);
         emailet=getActivity().findViewById(R.id.tv_email_f1);
-        ImageButton imageButton=getActivity().findViewById(R.id.ib_menu_f1);
-        imageButton.setOnClickListener(this);
+        imagemenu=getActivity().findViewById(R.id.ib_menu_f1);
+        imagemenu.setOnClickListener(this);
+        ib_edit.setOnClickListener(this);
 
     }
 
@@ -69,8 +74,15 @@ public class Fragment1 extends Fragment implements  View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ib_menu_f1:
-            Intent intent=new Intent(getActivity(), CreateProfile1.class);
-            startActivity(intent);
+            ///Intent intent=new Intent(getActivity(), CreateProfile1.class);
+           // startActivity(intent);
+               bottun_shit_menu bottunShitMenu=new bottun_shit_menu();
+               bottunShitMenu.show(getFragmentManager(),"bottomshit");
+            break;
+            case R.id.ib_edit_f1:
+                Intent intent1=new Intent(getActivity(), UpdateProfile.class);
+                startActivity(intent1);
+                break;
 
 
 
@@ -81,6 +93,10 @@ public class Fragment1 extends Fragment implements  View.OnClickListener{
    public void onStart() {
         super.onStart();
         FirebaseUser   user=FirebaseAuth.getInstance().getCurrentUser();
+       if(user==null){
+           Intent intent=new Intent(getActivity(),LoginActivity.class);
+           startActivity(intent);
+       }
         String currentuser= user.getUid();
         DocumentReference reference;
        FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
@@ -138,7 +154,7 @@ databaseReference.addChildEventListener(new ChildEventListener() {
                    // Glide.with(getContext()).load(url).into(imageView);
                    Glide.with(getContext()).load(urlResulta).dontAnimate().into(imageView);
 
-                    Toast.makeText(getContext(), ""+urlResulta, Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getContext(), ""+urlResulta, Toast.LENGTH_SHORT).show();
 
                     nameet.setText(nameResulta);
                     webet.setText(webResulta);

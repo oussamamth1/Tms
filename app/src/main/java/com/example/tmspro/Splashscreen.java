@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Map;
 import java.util.logging.LogRecord;
 
 public class Splashscreen extends AppCompatActivity {

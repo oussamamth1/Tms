@@ -3,111 +3,114 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".CreateProfile">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Profile"
-        android:textSize="20sp"
-        android:textColor="@color/read"
         android:textAlignment="center"
-        />
-    <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardCornerRadius="75dp"
-        android:layout_marginBottom="30dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:textColor="@color/purple_700"
+        android:textSize="40sp" />
+
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_cp"
-            android:background="@drawable/ic_baseline_person"
-            android:clickable="true"
-            android:scaleType="fitCenter"/>
+            android:layout_width="150dp"
+            android:layout_height="150dp"
 
-    </androidx.cardview.widget.CardView>
+
+
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/unknown_man_emoji_large"
+            app:civ_border_color="#FF5722"
+            app:civ_border_width="2dp" />
+
+
+
     <EditText
-        android:paddingStart="10dp"
-        android:drawablePadding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        android:drawableStart="@drawable/ic_baseline_person_pin_24"
         android:id="@+id/et_name_cp"
-        android:layout_margin="4dp"
-
-        android:textColor="@color/black"
-        />
-    <EditText
-        android:drawableStart="@drawable/ic_baseline_work_24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Profession"
+        android:layout_margin="4dp"
+        android:drawableStart="@drawable/ic_baseline_person_pin_24"
+        android:drawablePadding="5dp"
+        android:hint="Name"
+        android:paddingStart="10dp"
+
+        android:textColor="@color/black" />
+
+    <EditText
         android:id="@+id/et_Profession_cp"
-        android:layout_margin="4dp"
-        android:paddingStart="10dp"
-        android:drawablePadding="5dp"
-        android:textColor="@color/black"
-        />
-    <EditText
-        android:drawableStart="@drawable/ic_baseline_email_25"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:id="@+id/et_Email_cp"
         android:layout_margin="4dp"
-        android:paddingStart="10dp"
+        android:drawableStart="@drawable/ic_baseline_work_24"
         android:drawablePadding="5dp"
+        android:hint="Profession"
+        android:paddingStart="10dp"
+        android:textColor="@color/black" />
 
-        android:textColor="@color/black"
-        />
     <EditText
+        android:id="@+id/et_Email_cp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Location"
+        android:layout_margin="4dp"
+        android:drawableStart="@drawable/ic_baseline_email_25"
+        android:drawablePadding="5dp"
+        android:hint="Email"
+        android:paddingStart="10dp"
+
+        android:textColor="@color/black" />
+
+    <EditText
         android:id="@+id/et_Location_cp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:drawableStart="@drawable/ic_baseline_location_on_24"
-
-        android:paddingStart="10dp"
         android:drawablePadding="5dp"
-        android:textColor="@color/black"
-        />
+
+        android:hint="Location"
+        android:paddingStart="10dp"
+        android:textColor="@color/black" />
 
     <EditText
-        android:drawableStart="@drawable/ic_baseline_public_24"
-        android:layout_width="match_parent"
-
-        android:paddingStart="10dp"
-        android:drawablePadding="5dp"
-        android:layout_height="wrap_content"
-        android:hint="WebSite"
         android:id="@+id/et_WebSite_cp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp"
+        android:drawableStart="@drawable/ic_baseline_phone_24"
+        android:drawablePadding="5dp"
+        android:hint="Phone"
+        android:paddingStart="10dp"
+        android:inputType="phone"
 
-        android:textColor="@color/black"
-        />
+        android:textColor="@color/black" />
 
 
     <Button
         android:id="@+id/testbut"
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
 
-android:onClick="test"
-        android:textColor="@color/white"
-android:background="@drawable/butoon_f1_backround"
+        android:background="@drawable/butoon_f1_backround"
+        android:onClick="test"
         android:text="Save Profile"
-        />
+        android:textColor="@color/white" />
+
     <ProgressBar
+        android:id="@+id/porg_cp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/porg_cp"
-        android:visibility="invisible"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:visibility="invisible" />
 </LinearLayout>

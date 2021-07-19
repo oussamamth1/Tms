@@ -49,25 +49,19 @@
         >
 
 
-        <androidx.cardview.widget.CardView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_f1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardCornerRadius="50dp"
-           android:layout_gravity="center_vertical"
-            android:elevation="8dp"
-            app:cardElevation="10dp">
-
-            <ImageView
-                android:id="@+id/iv_f1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-android:src="@drawable/ic_baseline_person"
 
 
-                android:scaleType="fitCenter" />
-
-        </androidx.cardview.widget.CardView>
+            android:layout_alignBottom="@+id/coursimaageVid"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/unknown_man_emoji_large"
+            app:civ_border_color="#673AB7"
+            app:civ_border_width="2dp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -197,7 +191,7 @@ android:src="@drawable/ic_baseline_person"
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="webSite"
+        android:text="Phone Number"
         android:textSize="15sp"
         android:layout_marginRight="20dp"
         android:padding="8dp"
@@ -210,7 +204,7 @@ android:src="@drawable/ic_baseline_person"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_web_f1"
-        android:text="WebSite"
+        android:text="Phone Number"
         android:textSize="20sp"
         android:layout_marginRight="20dp"
         android:padding="5dp"
