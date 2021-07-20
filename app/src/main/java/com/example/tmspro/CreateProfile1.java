@@ -72,7 +72,7 @@ public class CreateProfile1 extends Activity {
 
         user=auth.getCurrentUser();
         documentReference=db.collection("user").document(auth.getCurrentUser().getUid());
-        storageReference= FirebaseStorage.getInstance().getReference();
+        storageReference= FirebaseStorage.getInstance().getReference("profile image");
 
         setContentView(R.layout.activity_create_profile);
         imageView=findViewById(R.id.iv_cp);
@@ -108,7 +108,7 @@ public class CreateProfile1 extends Activity {
 
                   // pd.setInverseBackgroundForced(true);
                    final StorageReference reference=storageReference.child(System.currentTimeMillis()+ "." +getFileEXt(imageuri));
-                   StorageReference filepath=storageReference.child("Blogimage").child(System.currentTimeMillis()+ "." +getFileEXt(imageuri));
+                   StorageReference filepath=storageReference.child(System.currentTimeMillis()+ "." +getFileEXt(imageuri));
                    //uploadTask=filepath.putFile(imageuri);
 
                    filepath.putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

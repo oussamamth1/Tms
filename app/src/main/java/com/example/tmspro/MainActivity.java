@@ -67,7 +67,8 @@ FirebaseAuth auth;
 
     protected void onStart() {
         super.onStart();
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+      FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new Fragment1()).commit();
         if(user==null){
             Intent intent=new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);

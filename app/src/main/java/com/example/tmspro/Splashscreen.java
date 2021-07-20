@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+
 import java.util.Map;
 import java.util.logging.LogRecord;
 
@@ -35,14 +39,25 @@ long animaTime=3500;
         AnimatorSet animaterset=new AnimatorSet();
         animaterset.playTogether(animatory,animatorname);
         animaterset.start();
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                finish();
+                if(user!=null){
+                    startActivity(new Intent(Splashscreen.this,MainActivity.class));
+                    finish();
+                }else{
+                    startActivity(new Intent(Splashscreen.this,LoginActivity.class));
+                }
             }
         },4000);
-
     }
 }
