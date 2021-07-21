@@ -131,6 +131,7 @@ public class CreateProfile1 extends Activity {
                                            profile.put("web",web);
                                            profile.put("uid",user.getUid());
                                            profile.put("url",imageUrl);
+                                           profile.put("privacy","Public");
 
                                            allUserMember.setName(name);
                                            allUserMember.setUid(auth.getUid());
@@ -167,7 +168,7 @@ public class CreateProfile1 extends Activity {
                            Toast.makeText(getApplicationContext(),"Profile Created",Toast.LENGTH_LONG).show();
                            Handler handler=new Handler();
                            handler.postDelayed(() -> {
-                               Intent intent=new Intent(CreateProfile1.this, Fragment1.class);
+                               Intent intent=new Intent(CreateProfile1.this, MainActivity.class);
                                startActivity(intent);
                            },2000);
 etprog.setVisibility(View.INVISIBLE);

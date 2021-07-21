@@ -80,7 +80,7 @@ public class bottun_shit_menu extends BottomSheetDialogFragment {
         cv_privcyt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Privecy.class));
+                startActivity(new Intent(getActivity(),PrivecyActivity.class));
 
             }
         });
