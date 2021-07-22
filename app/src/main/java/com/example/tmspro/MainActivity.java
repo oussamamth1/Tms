@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -33,16 +34,24 @@ FirebaseAuth auth;
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new Fragment1()).commit();
 
     }
+
   private   BottomNavigationView.OnNavigationItemSelectedListener onNav =new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
+
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            final Handler handler=new Handler();
+            handler.postDelayed(() -> {
             Fragment selected=null;
+
             switch (item.getItemId()){
                 case R.id.profile_buttom:
+
+
                     selected=new Fragment1();
                     break;
                 case R.id.ask_buttom:
                     selected=new Fragment2();
+
                     break;
                 case R.id.queue_buttom:
                     selected=new Fragment3();
@@ -54,7 +63,11 @@ FirebaseAuth auth;
 
 
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,selected).commit();
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,selected).commit();
+            },300);
+
+
             return true;
         }
     };
