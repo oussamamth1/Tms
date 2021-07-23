@@ -82,7 +82,7 @@ public class UpdateProfile extends AppCompatActivity {
                 Profission.setText(profResulta);
                 Email.setText(emailResulta);
                 Location.setText(locationResulta);
-                    Picasso.with(getApplicationContext()).load(urlResulta).into(userimage);
+                    Picasso.get().load(urlResulta).into(userimage);
                 }else {
                     Toast.makeText(UpdateProfile.this, "no profile detacted", Toast.LENGTH_SHORT).show();
                 }

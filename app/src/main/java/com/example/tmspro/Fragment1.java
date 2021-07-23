@@ -160,7 +160,7 @@ databaseReference.addChildEventListener(new ChildEventListener() {
                     webet.setText(webResulta);
                     profitionet.setText(profResulta);
                     emailet.setText(emailResulta);
-                    Picasso.with(getContext()).load(urlResulta).into(imageView);
+                    Picasso.get().load(urlResulta).into(imageView);
                   //  Intent intent=new Intent(getActivity(),test.class);
                   //  intent.putExtra("1",urlResulta);
                   //  startActivity(intent);
