@@ -58,7 +58,7 @@ android:clickable="true"
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_f2"
         android:layout_width="match_parent"
-        android:layout_height="630dp"
+        android:layout_height="800dp"
         android:layout_margin="3dp"
         android:paddingTop="62dp"
         app:layout_constraintBottom_toBottomOf="parent"
